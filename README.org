@@ -1,0 +1,56 @@
+* Commify
+ Insert or remove grouping commas (or other grouping character) in a buffer
+ number with a single command.  This is an otherwise tedious chore and one
+ that is not easily done via a macro or other Emacs user-level facilities.
+
+* Installation
+** Without Package
+Add commify.el to your load-path and
+#+BEGIN_SRC emacs-lisp
+(require 'commify)
+#+END_SRC
+
+** With Package Manager
+Simply install the commify package.
+
+* Configuration
+Commify has three variable that you can set to alter its behaviour, either
+through the Emacs customize facility or with ~setq~'s in your init file.
+
+- commify-group-char :: set this to a one-character string for inserting
+     between groups of digits.  By default it is set to ",".
+- commify-group-digits :: set this to an integer specifying the number of
+     characters you want in each group.  By default this is set to 3.
+- commify-decimal-char :: set this to a one-character string that is used as a
+     decimal point.  By default this is set to ".".
+
+Bind the ~commify-toggle~ command to a convenient key.  I put it on the ",,"
+keychord since it is rare in English to type two commas in a row.
+#+BEGIN_SRC emacs-lisp
+  (key-chord-define-global ",," 'cfy/toggle-commas)
+#+END_SRC
+
+You may also want to change the default settings:
+#+BEGIN_SRC emacs-lisp
+  (setq cfy/group-char "_")
+  (setq cfy/decimal-char ",")
+  (setq cfy/group-size 4)
+  (key-chord-define-global ",," 'cfy/toggle-commas)
+#+END_SRC
+
+* Usage
+When editing a buffer, simply put your cursor before, after, or within a
+number, integer or decimal, then invoke the command.
+#+BEGIN_QUOTE
+  The factorial of 15 if 1307674368000.
+#+END_QUOTE
+
+With the cursor anywhere in or immediately adjacent to the number, hit ",,"
+(or whatever you bound the command to) and the buffer changes to:
+#+BEGIN_QUOTE
+  The factorial of 15 if 1,307,674,368,000.
+#+END_QUOTE
+
+If you invoke the command again, the commas are removed.
+
+Not much to it, but it saves me a lot of time.
