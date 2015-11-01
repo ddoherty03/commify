@@ -36,14 +36,29 @@
 
 ;;; Code:
 
-(defvar cfy/group-char ",")
-(defvar cfy/decimal-char ".")
-(defvar cfy/group-size 3)
+(require 's)
 
-(defun cfy/commas (n  &optional group-char group-size)
-  "Return a string from integer N that inserts COMMA-CHAR between groups of GROUP-SIZE digits"
-  (unless group-char (setq group-char cfy/group-char))
-  (unless group-size (setq group-size cfy/group-size))
+;; Customize options.
+
+(defgroup commify nil
+  "Toggle insertion of commas in numbers in buffer."
+  :group 'convenience)
+
+(defcustom commify-group-char ","
+  "Character to use for separating groups of digits."
+  :type 'string
+  :group 'commify)
+
+(defcustom commify-decimal-char "."
+  "Character to use for decimal point."
+  :type 'string
+  :group 'commify)
+
+(defcustom commify-group-size 3
+  "Number of digits in each group."
+  :type 'integer
+  :group :commify)
+
   (let ((num nil)
         (grp-re nil)
         (rpl-str nil))
