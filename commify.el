@@ -59,6 +59,12 @@
   :type 'integer
   :group :commify)
 
+;; Main code:
+
+(defun commify--commas (n  &optional group-char group-size)
+  "For an integer N, return string version and insert GROUP-CHAR between groups of GROUP-SIZE digits."
+  (unless group-char (setq group-char commify-group-char))
+  (unless group-size (setq group-size commify-group-size))
   (let ((num nil)
         (grp-re nil)
         (rpl-str nil))
@@ -68,23 +74,23 @@
     (setq num (replace-regexp-in-string grp-re rpl-str num))
     (s-reverse (replace-regexp-in-string ",$" "" num))))
 
-(defun cfy/toggle-commas ()
+(defun commify-toggle ()
+  "Toggle insertion or deletion of grouping characters in the number around point."
   (interactive)
-  "Insert or delete grouping characters from the number around point"
   (save-excursion
-    (skip-chars-backward (concat cfy/decimal-char cfy/group-char "0-9e+-"))
+    (skip-chars-backward (concat commify-decimal-char commify-group-char "0-9e+-"))
     (when (looking-at "[-+]")
       (skip-chars-forward "-+"))
     (when (looking-at "[0-9]")
       (let ((beg-num (point))
             (num nil))
-        (skip-chars-forward (concat cfy/group-char "0-9"))
+        (skip-chars-forward (concat commify-group-char "0-9"))
         (setq num (delete-and-extract-region beg-num (point)))
-        (if (s-contains? cfy/group-char num)
-            (insert (s-replace-all `((,cfy/group-char . "")) num))
-          (insert (cfy/commas (string-to-number num))))
+        (if (s-contains? commify-group-char num)
+            (insert (s-replace-all `((,commify-group-char . "")) num))
+          (insert (commify--commas (string-to-number num))))
         (goto-char beg-num))))
-  (skip-chars-forward (concat cfy/decimal-char cfy/group-char "0-9e+-")))
+  (skip-chars-forward (concat commify-decimal-char commify-group-char "0-9e+-")))
 
 (provide 'commify)
 ;;; commify.el ends here
