@@ -35,7 +35,7 @@ You may also want to change the default settings:
   (setq commify-group-char "_")
   (setq commify-decimal-char ",")
   (setq commify-group-size 4)
-  (key-chord-define-global ",," 'commify-toggle-commas)
+  (key-chord-define-global ",," 'commify-toggle)
 #+END_SRC
 
 * Usage
