@@ -27,15 +27,15 @@ through the Emacs customize facility or with ~setq~'s in your init file.
 Bind the ~commify-toggle~ command to a convenient key.  I put it on the ",,"
 keychord since it is rare in English to type two commas in a row.
 #+BEGIN_SRC emacs-lisp
-  (key-chord-define-global ",," 'cfy/toggle-commas)
+  (key-chord-define-global ",," 'commify-toggle-commas)
 #+END_SRC
 
 You may also want to change the default settings:
 #+BEGIN_SRC emacs-lisp
-  (setq cfy/group-char "_")
-  (setq cfy/decimal-char ",")
-  (setq cfy/group-size 4)
-  (key-chord-define-global ",," 'cfy/toggle-commas)
+  (setq commify-group-char "_")
+  (setq commify-decimal-char ",")
+  (setq commify-group-size 4)
+  (key-chord-define-global ",," 'commify-toggle-commas)
 #+END_SRC
 
 * Usage
