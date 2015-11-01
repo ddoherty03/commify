@@ -17,7 +17,7 @@
 
 ;; Author: Daniel E. Doherty <ded-commify@ddoherty.net>
 ;; Version: 20151101
-;; Package-Requires: ((s "20150825.50"))
+;; Package-Requires: ((s "1.9.0"))
 ;; Keywords: convenience, editing, numbers, grouping, commas
 ;; URL: http://github.com/ddoherty03/commify
 
