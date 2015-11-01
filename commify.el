@@ -87,6 +87,7 @@
     (setq num (replace-regexp-in-string grp-re rpl-str num))
     (s-reverse (replace-regexp-in-string ",$" "" num))))
 
+;;;###autoload
 (defun commify-toggle ()
   "Toggle insertion or deletion of grouping characters in the number around point."
   (interactive)
