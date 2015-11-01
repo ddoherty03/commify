@@ -29,7 +29,7 @@
 ;;
 ;; Travel expense is 4654254654*
 ;;
-;; invoking commify/toggle will change the buffer to:
+;; invoking commify-toggle will change the buffer to:
 ;;
 ;; Travel expense is 4,654,254,654*
 ;;
