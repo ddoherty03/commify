@@ -19,7 +19,7 @@
 ;; Version: 20151101
 ;; Package-Requires: ((s "1.9.0"))
 ;; Keywords: convenience, editing, numbers, grouping, commas
-;; URL: http://github.com/ddoherty03/commify
+;; URL: https://github.com/ddoherty03/commify
 
 ;;; Commentary:
 
