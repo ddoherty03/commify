@@ -70,7 +70,7 @@
 (defcustom commify-group-size 3
   "Number of digits in each group."
   :type 'integer
-  :group :commify)
+  :group 'commify)
 
 ;; Main code:
 
