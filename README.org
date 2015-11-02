@@ -14,7 +14,7 @@ Add commify.el to your load-path and
 Simply install the commify package.
 
 * Configuration
-Commify has three variable that you can set to alter its behaviour, either
+Commify has three variables that you can set to alter its behaviour, either
 through the Emacs customize facility or with ~setq~'s in your init file.
 
 - commify-group-char :: set this to a one-character string for inserting
@@ -24,8 +24,8 @@ through the Emacs customize facility or with ~setq~'s in your init file.
 - commify-decimal-char :: set this to a one-character string that is used as a
      decimal point.  By default this is set to ".".
 
-Bind the ~commify-toggle~ command to a convenient key.  I put it on the ",,"
-keychord since it is rare in English to type two commas in a row.
+Bind the ~commify-toggle~ command to a convenient key.  I have put it on the
+",," keychord since it is rare in English to type two commas in a row.
 #+BEGIN_SRC emacs-lisp
   (key-chord-define-global ",," 'commify-toggle-commas)
 #+END_SRC
@@ -46,11 +46,11 @@ number, integer or decimal, then invoke the command.
 #+END_QUOTE
 
 With the cursor anywhere in or immediately adjacent to the number, hit ",,"
-(or whatever you bound the command to) and the buffer changes to:
+(or whatever you've bound the command to) and the buffer will change to:
 #+BEGIN_QUOTE
   The factorial of 15 if 1,307,674,368,000.
 #+END_QUOTE
 
-If you invoke the command again, the commas are removed.
+If you invoke the command again, and the commas are removed.
 
 Not much to it, but it saves me a lot of time.
