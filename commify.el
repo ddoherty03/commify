@@ -1,4 +1,4 @@
-;;; commify.el --- Toggle grouping commas in numbers in buffer
+;;; commify.el --- Toggle grouping commas in numbers
 
 ;; Copyright (C) 2015 Daniel E. Doherty
 

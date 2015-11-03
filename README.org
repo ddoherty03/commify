@@ -1,7 +1,8 @@
 * Commify
- Insert or remove grouping commas (or other grouping character) in a buffer
- number with a single command.  This is an otherwise tedious chore and one
- that is not easily done via a macro or other Emacs user-level facilities.
+ Insert or remove grouping commas (or other grouping character) in a number
+ under or adjacent to the cursor with a single command.  This is an otherwise
+ tedious chore and one that is not easily done via a macro or other Emacs
+ user-level facilities.
 
 * Installation
 ** Without Package
