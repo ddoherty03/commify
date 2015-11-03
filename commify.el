@@ -75,13 +75,13 @@
 ;; Main code:
 
 (defun commify--commas (n  &optional group-char group-size)
-  "For an integer N, return string version and insert GROUP-CHAR between groups of GROUP-SIZE digits."
+  "For an integer string N, insert GROUP-CHAR between groups of GROUP-SIZE digits."
   (unless group-char (setq group-char commify-group-char))
   (unless group-size (setq group-size commify-group-size))
   (let ((num nil)
         (grp-re nil)
         (rpl-str nil))
-    (setq num (s-reverse (format "%s" n)))
+    (setq num (s-reverse n))
     (setq grp-re (concat "[0-9]\\{" (format "%s" group-size) "\\}"))
     (setq rpl-str (concat "\\&" group-char))
     (setq num (replace-regexp-in-string grp-re rpl-str num))
@@ -102,7 +102,7 @@
         (setq num (delete-and-extract-region beg-num (point)))
         (if (s-contains? commify-group-char num)
             (insert (s-replace-all `((,commify-group-char . "")) num))
-          (insert (commify--commas (string-to-number num))))
+          (insert (commify--commas num)))
         (goto-char beg-num))))
   (skip-chars-forward (concat commify-decimal-char commify-group-char "0-9e+-")))
 
