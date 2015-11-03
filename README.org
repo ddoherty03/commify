@@ -27,7 +27,7 @@ through the Emacs customize facility or with ~setq~'s in your init file.
 Bind the ~commify-toggle~ command to a convenient key.  I have put it on the
 ",," keychord since it is rare in English to type two commas in a row.
 #+BEGIN_SRC emacs-lisp
-  (key-chord-define-global ",," 'commify-toggle-commas)
+  (key-chord-define-global ",," 'commify-toggle)
 #+END_SRC
 
 You may also want to change the default settings:
@@ -40,7 +40,7 @@ You may also want to change the default settings:
 
 * Usage
 When editing a buffer, simply put your cursor before, after, or within a
-number, integer or decimal, then invoke the command.
+number, integer, or decimal, then invoke the command.
 #+BEGIN_QUOTE
   The factorial of 15 if 1307674368000.
 #+END_QUOTE
@@ -51,6 +51,6 @@ With the cursor anywhere in or immediately adjacent to the number, hit ",,"
   The factorial of 15 if 1,307,674,368,000.
 #+END_QUOTE
 
-If you invoke the command again, and the commas are removed.
+If you invoke the command again, the commas are removed.
 
 Not much to it, but it saves me a lot of time.
