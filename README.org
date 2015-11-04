@@ -20,7 +20,7 @@ through the Emacs customize facility or with ~setq~'s in your init file.
 
 - commify-group-char :: set this to a one-character string for inserting
      between groups of digits.  By default it is set to ",".
-- commify-group-digits :: set this to an integer specifying the number of
+- commify-group-size :: set this to an integer specifying the number of
      characters you want in each group.  By default this is set to 3.
 - commify-decimal-char :: set this to a one-character string that is used as a
      decimal point.  By default this is set to ".".
