@@ -12,7 +12,7 @@ Add commify.el to your load-path and
 #+END_SRC
 
 ** With Package Manager
-Simply install the commify package.
+Simply install the ~commify~ package.
 
 * Configuration
 Commify has three variables that you can set to alter its behaviour, either
@@ -47,11 +47,17 @@ number, integer, or decimal, then invoke the command.
 #+END_QUOTE
 
 With the cursor anywhere in or immediately adjacent to the number, hit ",,"
-(or whatever you've bound the command to) and the buffer will change to:
+(or whatever you've bound the ~commify-toggle~ command to) and the buffer will
+change to:
 #+BEGIN_QUOTE
   The factorial of 15 is 1,307,674,368,000.
 #+END_QUOTE
 
-If you invoke the command again, the commas are removed.
+If you invoke the command again, the commas are removed.  ~commify-toggle~
+works on floating or scientific numbers as well, but it only ever affects the
+digits before the decimal point as defined in the ~commify-decimal-char~
+variable.
+
+Afterwards, the cursor will be placed immediately after the affected number.
 
 Not much to it, but it saves me a lot of time.
