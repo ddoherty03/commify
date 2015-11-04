@@ -35,8 +35,9 @@
 ;;
 ;; Calling commify-toggle again removes the commas.  The cursor can also be
 ;; anywhere in the number or immediately before or after the number.
-;; commify/toggle works on floating or scientific numbers as well, but in only
-;; ever affect the digits before the decimal point.
+;; commify-toggle works on floating or scientific numbers as well, but it only
+;; ever affects the digits before the decimal point.  Afterwards, the cursor
+;; will be placed immediately after the affected number.
 ;;
 ;; You can configure these variables:
 ;;   - commify-group-char (default ",") to the char used for grouping
