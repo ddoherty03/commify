@@ -86,7 +86,7 @@
     (setq grp-re (concat "[0-9]\\{" (format "%s" group-size) "\\}"))
     (setq rpl-str (concat "\\&" group-char))
     (setq num (replace-regexp-in-string grp-re rpl-str num))
-    (s-reverse (replace-regexp-in-string ",$" "" num))))
+    (s-reverse (replace-regexp-in-string (concat group-char "$") "" num))))
 
 ;;;###autoload
 (defun commify-toggle ()
