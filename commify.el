@@ -82,10 +82,15 @@
   (let ((num nil)
         (grp-re nil)
         (rpl-str nil))
+    ;; reverse the string so we can insert the commas left-to-right
     (setq num (s-reverse n))
+    ;; form the re to look for groups of group-size digits, e.g. "[0-9]\{3\}"
     (setq grp-re (concat "[0-9]\\{" (format "%s" group-size) "\\}"))
+    ;; form the replacement, e.g., "\&,"
     (setq rpl-str (concat "\\&" group-char))
+    ;; do the replacement in the reversed string
     (setq num (replace-regexp-in-string grp-re rpl-str num))
+    ;; now chop off any trailing group-char and re-reverse the string.
     (s-reverse (s-chop-suffix group-char num))))
 
 ;;;###autoload
@@ -93,18 +98,27 @@
   "Toggle insertion or deletion of grouping characters in the number around point."
   (interactive)
   (save-excursion
+    ;; find the beginning of the number the cursor is in or after.
     (skip-chars-backward (concat commify-decimal-char commify-group-char "0-9e+-"))
+    ;; skip past any leading sign.
     (when (looking-at "[-+]")
       (skip-chars-forward "-+"))
+    ;; if there's a number to the right, proceed.
     (when (looking-at "[0-9]")
+      ;; record the start of the number.
       (let ((beg-num (point))
             (num nil))
+        ;; go forward across any digits or group-char.
         (skip-chars-forward (concat commify-group-char "0-9"))
+        ;; extract the number as a string.
         (setq num (delete-and-extract-region beg-num (point)))
         (if (s-contains? commify-group-char num)
+            ;; remove group-char if its in the string ...
             (insert (s-replace-all `((,commify-group-char . "")) num))
+          ;; or add them if its not.
           (insert (commify--commas num)))
         (goto-char beg-num))))
+  ;; move cursor to the end of the number.
   (skip-chars-forward (concat commify-decimal-char commify-group-char "0-9e+-")))
 
 (provide 'commify)
