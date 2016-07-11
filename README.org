@@ -1,5 +1,5 @@
 * Commify
- Insert or remove grouping commas (or other grouping character) in a number
+ Insert or remove grouping commas (or other grouping character) in the number
  under or adjacent to the cursor with a single command.  This is an otherwise
  tedious chore and one that is not easily done via a macro or other Emacs
  user-level facilities.
@@ -22,8 +22,8 @@ through the Emacs customize facility or with ~setq~'s in your init file.
      between groups of digits.  By default it is set to ",".
 - commify-group-size :: set this to an integer specifying the number of
      characters you want in each group.  By default this is set to 3.
-- commify-decimal-char :: set this to a one-character string that is used as a
-     decimal point.  By default this is set to ".".
+- commify-decimal-char :: set this to a one-character string that is
+     recognized as the decimal point.  By default this is set to ".".
 
 Bind the ~commify-toggle~ command to a convenient key.  I have put it on the
 ",," keychord since it is rare in English to type two commas in a row.

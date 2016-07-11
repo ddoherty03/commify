@@ -64,7 +64,7 @@
   :group 'commify)
 
 (defcustom commify-decimal-char "."
-  "Character to use for decimal point."
+  "Character recognized as the decimal point."
   :type 'string
   :group 'commify)
 
