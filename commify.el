@@ -16,7 +16,7 @@
 ;; with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ;; Author: Daniel E. Doherty <ded-commify@ddoherty.net>
-;; Version: 1.1.2
+;; Version: 1.2.0
 ;; Package-Requires: ((s "1.9.0"))
 ;; Keywords: convenience, editing, numbers, grouping, commas
 ;; URL: https://github.com/ddoherty03/commify
