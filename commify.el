@@ -188,11 +188,11 @@ Do so for all numbers in the region between BEG and END."
     (search-forward-regexp (commify--number-re) (+ 30 (point)) t)))
 
 ;;;###autoload
-(defun commify-toggle (beg end)
+(defun commify-toggle ()
   "Toggle commas at point or on the region from BEG to END."
-  (interactive "r")
+  (interactive)
   (if (use-region-p)
-      (commify-toggle-on-region beg end)
+      (commify-toggle-on-region (region-beginning) (region-end))
     (commify-toggle-at-point)))
 
 
