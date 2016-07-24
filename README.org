@@ -60,4 +60,16 @@ variable.
 
 Afterwards, the cursor will be placed immediately after the affected number.
 
+** Ignored Numbers
+If a number appears to be (1) part of a date, (2) part of an identifier, (3)
+part of a hexadecimal number starting with '0x', or (4) a number starting with
+zero, commify will ignore it.  Thus, if the cursor is to the left of
+'2012-09-22' invoking ~commify-toggle~ will leave the text alone, but will
+still advance the cursor.
+
+** Acting on the Region
+If the region is active when the you invoke ~commify-toggle~, all numbers in
+the region are affected.  This can be especially handy when you want to
+commify numbers in a org-mode table, for example.
+
 Not much to it, but it saves me a lot of time.
