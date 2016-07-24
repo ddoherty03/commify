@@ -73,7 +73,7 @@
   :type 'integer
   :group 'commify)
 
-;; Main code:
+;; Utility functions
 
 (defun commify--number-chars ()
   "Characters that can appear in a number."
@@ -154,13 +154,7 @@ The matched sub-parts are:
   (unless group-char (setq group-char commify-group-char))
   (s-replace-all `((,commify-group-char . "")) n))
 
-;;;###autoload
-(defun commify-toggle (beg end)
-  "Toggle commas at point or on the region from BEG to END."
-  (interactive "r")
-  (if (use-region-p)
-      (commify-toggle-on-region beg end)
-    (commify-toggle-at-point)))
+;; Commands
 
 ;;;###autoload
 (defun commify-toggle-at-point ()
@@ -192,6 +186,16 @@ Do so for all numbers in the region between BEG and END."
       (while (search-forward-regexp (commify--number-re) (+ 30 end) t)
         (commify-toggle-at-point)))
     (search-forward-regexp (commify--number-re) (+ 30 (point)) t)))
-  
+
+;;;###autoload
+(defun commify-toggle (beg end)
+  "Toggle commas at point or on the region from BEG to END."
+  (interactive "r")
+  (if (use-region-p)
+      (commify-toggle-on-region beg end)
+    (commify-toggle-at-point)))
+
+
 (provide 'commify)
 ;;; commify.el ends here
+
