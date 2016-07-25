@@ -184,8 +184,8 @@ Do so for all numbers in the region between BEG and END."
     (save-excursion
       (goto-char beg)
       (while (search-forward-regexp (commify--number-re) (+ 30 end) t)
-        (commify-toggle-at-point)))
-    (search-forward-regexp (commify--number-re) (+ 30 (point)) t)))
+        (commify-toggle-at-point))
+      (search-forward-regexp (commify--number-re) (+ 30 (point)) t))))
 
 ;;;###autoload
 (defun commify-toggle ()
