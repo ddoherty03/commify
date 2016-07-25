@@ -1,8 +1,8 @@
 * Commify
  Insert or remove grouping commas (or other grouping character) in the number
- under or adjacent to the cursor with a single command.  This is an otherwise
- tedious chore and one that is not easily done via a macro or other Emacs
- user-level facilities.
+ under or adjacent to the cursor, or for all numbers within the region, with a
+ single command.  This is an otherwise tedious chore and one that is not
+ easily done via a macro or other Emacs user-level facilities.
 
 * Installation
 ** Without Package
@@ -58,7 +58,8 @@ works on floating or scientific numbers as well, but it only ever affects the
 digits before the decimal point as defined in the ~commify-decimal-char~
 variable.
 
-Afterwards, the cursor will be placed immediately after the affected number.
+Afterwards, the cursor will be moved to the point immediately after the
+affected number.
 
 ** Ignored Numbers
 If a number appears to be (1) part of a date, (2) part of an identifier, (3)
@@ -69,7 +70,7 @@ still advance the cursor.
 
 ** Acting on the Region
 If the region is active when the you invoke ~commify-toggle~, all numbers in
-the region are affected.  This can be especially handy when you want to
-commify numbers in a org-mode table, for example.
+the region have ~commify-toggle~ invoked on them.  This can be especially
+handy when you want to commify numbers in a org-mode table, for example.
 
 Not much to it, but it saves me a lot of time.
