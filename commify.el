@@ -168,6 +168,8 @@ The matched sub-parts are:
               (num-beg (match-beginning 2))
               (num-end (match-end 2)))
           (delete-region num-beg num-end)
+          ;; We may have point at a +/- sign, skip over
+          (skip-chars-forward "+-")
           (if (s-contains? commify-group-char num)
               (insert (commify--uncommas num))
             (insert (commify--commas num)))))))
