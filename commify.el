@@ -84,8 +84,8 @@
 
 A valid number has a mandatory whole number part, which it
 captures as the second group.  The number may contain the
-commify-group-char in the whole number part and uses
-commify-decimal-char as the separator between the whole and
+`commify-group-char' in the whole number part and uses
+`commify-decimal-char' as the separator between the whole and
 fractional part of the number.  A leading sign, `+' or `-' is
 optional, as is a trailing exponent introduced by `e' or `E'.
 
@@ -123,7 +123,6 @@ The matched sub-parts are:
 (defun commify--on-zero-filled-p ()
   "Does text to the right of the cursor start with zero?"
   (looking-at-p "0"))
-
 
 (defun commify--on-hex-p ()
   "Is text to the right of the cursor part of a hexadecimal number?"
