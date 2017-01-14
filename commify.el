@@ -134,19 +134,21 @@ The matched sub-parts are:
   "For an integer string N, insert GROUP-CHAR between groups of GROUP-SIZE digits."
   (unless group-char (setq group-char commify-group-char))
   (unless group-size (setq group-size commify-group-size))
-  (let ((num nil)
-        (grp-re nil)
-        (rpl-str nil))
-    ;; reverse the string so we can insert the commas left-to-right
-    (setq num (s-reverse n))
-    ;; form the re to look for groups of group-size digits, e.g. "[0-9]\{3\}"
-    (setq grp-re (concat "[0-9]\\{" (format "%s" group-size) "\\}"))
-    ;; form the replacement, e.g., "\&,"
-    (setq rpl-str (concat "\\&" group-char))
-    ;; do the replacement in the reversed string
-    (setq num (replace-regexp-in-string grp-re rpl-str num))
-    ;; now chop off any trailing group-char and re-reverse the string.
-    (s-reverse (s-chop-suffix group-char num))))
+  (if (< group-size 1)
+      n
+    (let ((num nil)
+          (grp-re nil)
+          (rpl-str nil))
+      ;; reverse the string so we can insert the commas left-to-right
+      (setq num (s-reverse n))
+      ;; form the re to look for groups of group-size digits, e.g. "[0-9]\{3\}"
+      (setq grp-re (concat "[0-9]\\{" (format "%s" group-size) "\\}"))
+      ;; form the replacement, e.g., "\&,"
+      (setq rpl-str (concat "\\&" group-char))
+      ;; do the replacement in the reversed string
+      (setq num (replace-regexp-in-string grp-re rpl-str num))
+      ;; now chop off any trailing group-char and re-reverse the string.
+      (s-reverse (s-chop-suffix group-char num)))))
 
 (defun commify--uncommas (n &optional group-char)
   "For an integer string N, remove all instances of GROUP-CHAR."
@@ -199,4 +201,3 @@ Do so for all numbers in the region between BEG and END."
 
 (provide 'commify)
 ;;; commify.el ends here
-
