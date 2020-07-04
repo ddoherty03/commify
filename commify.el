@@ -153,7 +153,7 @@ The matched sub-parts are:
 (defun commify--uncommas (n &optional group-char)
   "For an integer string N, remove all instances of GROUP-CHAR."
   (unless group-char (setq group-char commify-group-char))
-  (s-replace-all `((,commify-group-char . "")) n))
+  (s-replace-all `((,group-char . "")) n))
 
 ;; Commands
 
