@@ -1,3 +1,20 @@
+;;; Commentary:
+
+;; This file provides tests for commify.  To run the tests, first run
+;;
+;; M-x eval-buffer
+;;
+;; in this buffer, then,
+;;
+;; M-x ert (entering t as the argument)
+;;
+;; The t argument is for test selectionm and will run all of the tests.  If
+;; any tests are added, changed, or deleted, re-run the eval-buffer command.
+
+;;; Code:
+(load-file "test-helper.el")
+
+;; Adding the group-char
 (ert-deftest commify-test-decimal ()
   "Test rendering of ordinary decimal number with defaults"
   (should (equal "8,314,159" (commify--commas "8314159")))
