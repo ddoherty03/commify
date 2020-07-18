@@ -50,6 +50,12 @@
   (should (equal "42342342348314159" (commify--commas "42342342348314159" "_" -1)))
   (should (equal "987" (commify--commas "987" "_" 0))))
 
+(ert-deftest commify-test-hex ()
+  "Test rendering of ordinary decimal number with defaults"
+  (should (equal "831A_041F_5EE9"
+                 (commify--commas "831A041F5EE9" "_" 4 "0-9A-Fa-f")))
+  (should (equal "ABC" (commify--commas "ABC" "_" 4 "0-9A-Fa-f"))))
+
 ;;; Stripping away the group char
 
 (ert-deftest commify-uncommify-test-decimal ()
