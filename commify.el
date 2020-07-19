@@ -264,14 +264,14 @@ The matched sub-parts are:
   "Toggle insertion or deletion of numeric grouping characters.
 Do so for all numbers in the region between BEG and END."
   (interactive "r")
-  (let (deactivate-mark)
-    (save-mark-and-excursion
+  (save-excursion
+    (let ((deactivate-mark)
+          (end-mark (copy-marker end)))
       (goto-char beg)
       (commify-toggle-at-point)
       (while (and (> (commify--move-to-next-nonblank) 0)
-                  (<= (point) end))
-        (commify-toggle-at-point))
-      (commify-toggle-at-point))))
+                  (<= (point) end-mark))
+        (commify-toggle-at-point)))))
 
 ;;;###autoload
 (defun commify-toggle ()
