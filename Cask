@@ -6,6 +6,7 @@
 (depends-on "s")
 
 (development
+  (depends-on "s")
   (depends-on "ecukes")
   (depends-on "espuds")
   (depends-on "ert-runner")
