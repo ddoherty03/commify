@@ -240,10 +240,11 @@ The matched sub-parts are:
             ;; We may have point at a +/- sign, skip over
             (goto-char num-beg)
             (if (s-contains? commify-alt-group-char num)
-                (insert (commify--uncommas num commify-alt-group-char))
-              (insert (commify--commas
+                (insert-before-markers (commify--uncommas num commify-alt-group-char))
+              (insert-before-markers (commify--commas
                        num commify-alt-group-char commify-alt-group-size
-                       commify-alt-digits)))))
+                       commify-alt-digits)))
+            (goto-char num-end)))
        ;; a decimal number
        ((looking-at (commify--number-re))
         (let ((num (match-string 2))
@@ -253,11 +254,10 @@ The matched sub-parts are:
             ;; We may have point at a +/- sign, skip over
             (goto-char num-beg)
             (if (s-contains? commify-group-char num)
-                (insert (commify--uncommas num commify-group-char))
-              (insert (commify--commas
-                       num commify-group-char commify-group-size)))))))
-    ;; move the cursor to the end of the number.
-    (skip-chars-forward "^[:blank:]" (min (point-max) (line-end-position)))))
+                (insert-before-markers (commify--uncommas num commify-group-char))
+              (insert-before-markers (commify--commas
+                       num commify-group-char commify-group-size)))
+            (goto-char num-end)))))))
 
 ;;;###autoload
 (defun commify-toggle-on-region (beg end)
