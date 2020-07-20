@@ -58,6 +58,9 @@
   "Toggle insertion of commas in numbers in buffer."
   :group 'convenience)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Decimal numbers customization
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom commify-group-char ","
   "Character to use for separating groups of digits in decimal numbers."
   :type 'string
@@ -73,47 +76,144 @@
   :type 'integer
   :group 'commify)
 
-(defcustom commify-alt-group-char "_"
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Hexadecimal numbers customization
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defcustom commify-hex-enable t
+  "Enable commify for hexadecimal numbers."
+  :type 'boolean
+  :group 'commify)
+
+(defcustom commify-hex-group-char "_"
   "Character to use for separating groups of non-decimal digits.
 
 You can enable the commify to commify forms of numbers other than
 the default decimal numbers.  For example, you can set up commify
 to add grouping to hexadecimal, octal, or binary numbers by
 defining appropriate regular expressions for
-`commify-alt-prefix-re' and `commify-alt-suffix-re' and a
-character range for `commify-alt-digits' to recognize a number in
+`commify-hex-prefix-re' and `commify-hex-suffix-re' and a
+character range for `commify-hex-digits' to recognize a number in
 a non-decimal base.  If you do so, this string is used to
-separate the digits into groups of `commify-alt-group-size'."
+separate the digits into groups of `commify-hex-group-size'."
   :type 'string
   :group 'commify)
 
-(defcustom commify-alt-prefix-re "0[xXoObB]"
+(defcustom commify-hex-prefix-re "0[xX]"
   "Regular expression prefix required before a number in a non-decimal base."
   :type 'regexp
   :group 'commify)
 
-(defcustom commify-alt-digits "0-9A-Fa-f"
+(defcustom commify-hex-digits "0-9A-Fa-f"
   "Character class of valid digits in a number in a non-decimal base."
   :type 'regexp
   :group 'commify)
 
-(defcustom commify-alt-suffix-re ""
+(defcustom commify-hex-suffix-re ""
   "Regular expression suffux required after a number in a non-decimal base."
   :type 'regexp
   :group 'commify)
 
-(defcustom commify-alt-group-size 4
+(defcustom commify-hex-group-size 4
   "Number of digits in each group for non-decimal base numbers."
   :type 'integer
   :group 'commify)
 
-;; Utility functions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Octal numbers customization
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun commify--number-re ()
-  "Regular expression of a valid number string.
+(defcustom commify-oct-enable t
+  "Enable commify for octal numbers."
+  :type 'boolean
+  :group 'commify)
 
-A valid number has a mandatory whole number part, which it
-captures as the second group.  The number may contain the
+(defcustom commify-oct-group-char "_"
+  "Character to use for separating groups of non-decimal digits.
+
+You can enable the commify to commify forms of numbers other than
+the default decimal numbers.  For example, you can set up commify
+to add grouping to hexadecimal, octal, or binary numbers by
+defining appropriate regular expressions for
+`commify-oct-prefix-re' and `commify-oct-suffix-re' and a
+character range for `commify-oct-digits' to recognize a number in
+a non-decimal base.  If you do so, this string is used to
+separate the digits into groups of `commify-oct-group-size'."
+  :type 'string
+  :group 'commify)
+
+(defcustom commify-oct-prefix-re "0[oO]"
+  "Regular expression prefix required before a number in an octal number."
+  :type 'regexp
+  :group 'commify)
+
+(defcustom commify-oct-digits "0-7"
+  "Character class of valid digits in a number in an octal number."
+  :type 'regexp
+  :group 'commify)
+
+(defcustom commify-oct-suffix-re ""
+  "Regular expression suffux required after a number in an octal number."
+  :type 'regexp
+  :group 'commify)
+
+(defcustom commify-oct-group-size 3
+  "Number of digits in each group for octal numbers."
+  :type 'integer
+  :group 'commify)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Binary numbers customization
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defcustom commify-bin-enable t
+  "Enable commify for binary numbers."
+  :type 'boolean
+  :group 'commify)
+
+(defcustom commify-bin-group-char "_"
+  "Character to use for separating groups of non-decimal digits.
+
+You can enable the commify to commify forms of numbers other than
+the default decimal numbers.  For example, you can set up commify
+to add grouping to hexadecimal, octal, or binary numbers by
+defining appropriate regular expressions for
+`commify-bin-prefix-re' and `commify-bin-suffix-re' and a
+character range for `commify-bin-digits' to recognize a number in
+a non-decimal base.  If you do so, this string is used to
+separate the digits into groups of `commify-bin-group-size'."
+  :type 'string
+  :group 'commify)
+
+(defcustom commify-bin-prefix-re "0[bB]"
+  "Regular expression prefix required before a number in an octal number."
+  :type 'regexp
+  :group 'commify)
+
+(defcustom commify-bin-digits "0-1"
+  "Character class of valid digits in a number in an octal number."
+  :type 'regexp
+  :group 'commify)
+
+(defcustom commify-bin-suffix-re ""
+  "Regular expression suffux required after a number in an octal number."
+  :type 'regexp
+  :group 'commify)
+
+(defcustom commify-bin-group-size 8
+  "Number of digits in each group for octal numbers."
+  :type 'integer
+  :group 'commify)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Regex constructors
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun commify--decimal-re ()
+  "Regular expression of a valid decimal number string.
+
+A valid decimal number has a mandatory whole number part, which
+it captures as the second group.  The number may contain the
 `commify-group-char' in the whole number part and uses
 `commify-decimal-char' as the separator between the whole and
 fractional part of the number.  A leading sign, `+' or `-' is
@@ -130,13 +230,13 @@ The matched sub-parts are:
         (exp "\\([eE][-+0-9]+\\)?"))
     (concat sign whole frac exp)))
 
-(defun commify--alt-number-re ()
+(defun commify--hex-number-re ()
   "Regular expression of a valid number string in a non-decimal base.
 
-A valid number in a non-decimal base has an optional sign, a
-mandatory prefix, a mandatory whole number part composed of the
-valid digits and the grouping character, which it captures as the
-third group, and a mandatory suffix, which may be empty.
+A valid hexadecimal number has an optional sign, a mandatory
+prefix, a mandatory whole number part composed of the valid
+digits and the grouping character, which it captures as the third
+group, and a mandatory suffix, which may be empty.
 
 The matched sub-parts are:
   1. the optional sign
@@ -145,11 +245,57 @@ The matched sub-parts are:
   4. the suffix."
 
   (let ((sign (concat "\\([-+]\\)?"))
-        (pre (concat "\\(" commify-alt-prefix-re "\\)"))
-        (whole (concat "\\([" (regexp-quote commify-alt-group-char)
-                       (regexp-quote commify-alt-digits) "]+\\)"))
-        (suffix (concat "\\(" (regexp-quote commify-alt-suffix-re) "\\)")))
+        (pre (concat "\\(" commify-hex-prefix-re "\\)"))
+        (whole (concat "\\([" (regexp-quote commify-hex-group-char)
+                       (regexp-quote commify-hex-digits) "]+\\)"))
+        (suffix (concat "\\(" (regexp-quote commify-hex-suffix-re) "\\)")))
     (concat sign pre whole suffix)))
+
+(defun commify--oct-number-re ()
+  "Regular expression of a valid number string in a non-decimal base.
+
+A valid octal number has an optional sign, a mandatory prefix, a
+mandatory whole number part composed of the valid digits and the
+grouping character, which it captures as the third group, and a
+mandatory suffix, which may be empty.
+
+The matched sub-parts are:
+  1. the optional sign
+  2. the pre-fix,
+  3. the whole number part, and
+  4. the suffix."
+
+  (let ((sign (concat "\\([-+]\\)?"))
+        (pre (concat "\\(" commify-oct-prefix-re "\\)"))
+        (whole (concat "\\([" (regexp-quote commify-oct-group-char)
+                       (regexp-quote commify-oct-digits) "]+\\)"))
+        (suffix (concat "\\(" (regexp-quote commify-oct-suffix-re) "\\)")))
+    (concat sign pre whole suffix)))
+
+(defun commify--bin-number-re ()
+  "Regular expression of a valid binary number string.
+
+A valid binary number has an optional sign, a mandatory prefix, a
+mandatory whole number part composed of the valid digits and the
+grouping character, which it captures as the third group, and a
+mandatory suffix, which may be empty.
+
+The matched sub-parts are:
+  1. the optional sign
+  2. the pre-fix,
+  3. the whole number part, and
+  4. the suffix."
+
+  (let ((sign (concat "\\([-+]\\)?"))
+        (pre (concat "\\(" commify-bin-prefix-re "\\)"))
+        (whole (concat "\\([" (regexp-quote commify-bin-group-char)
+                       (regexp-quote commify-bin-digits) "]+\\)"))
+        (suffix (concat "\\(" (regexp-quote commify-bin-suffix-re) "\\)")))
+    (concat sign pre whole suffix)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Exception predicates
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun commify--exception-p (str)
   "Should the STR be excluded from commify?"
@@ -173,6 +319,9 @@ The matched sub-parts are:
   (save-match-data
     (string-match-p "^0[^xobXOB]" str)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Buffer movement
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun commify--current-nonblank ()
   "Return the string from the buffer of all non-blank characters around the cursor"
 
@@ -191,6 +340,10 @@ The matched sub-parts are:
         (skip-chars-forward "^\n[:blank:]" (point-max))
         (skip-chars-forward "\n[:blank:]" (point-max)))
     0))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Adding and removing grouping characters
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun commify--commas (n  &optional group-char group-size valid-digits)
   "For an integer string N, insert GROUP-CHAR between groups of GROUP-SIZE VALID-DIGITS."
@@ -218,7 +371,9 @@ The matched sub-parts are:
   (unless group-char (setq group-char commify-group-char))
   (s-replace-all `((,group-char . "")) n))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Commands
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;###autoload
 (defun commify-toggle-at-point ()
@@ -231,22 +386,50 @@ The matched sub-parts are:
       (skip-chars-backward "^[:blank:]"
                            (max (point-min) (line-beginning-position)))
       (cond
-       ;; a hex, octal, or binary number, usually
-       ((looking-at (commify--alt-number-re))
+       ;; a hexadecimal number
+       ((and commify-hex-enable (looking-at (commify--hex-number-re)))
+          (let ((num (match-string 3))
+               (num-beg (match-beginning 3))
+               (num-end (match-end 3)))
+           (delete-region num-beg num-end)
+           ;; We may have point at a +/- sign, skip over
+           (goto-char num-beg)
+           (if (s-contains? commify-hex-group-char num)
+               (insert-before-markers (commify--uncommas num commify-hex-group-char))
+             (insert-before-markers (commify--commas
+                                     num commify-hex-group-char commify-hex-group-size
+                                     commify-hex-digits)))
+           (goto-char num-end)))
+       ;; an octal number
+       ((and commify-oct-enable (looking-at (commify--oct-number-re)))
         (let ((num (match-string 3))
               (num-beg (match-beginning 3))
               (num-end (match-end 3)))
-            (delete-region num-beg num-end)
-            ;; We may have point at a +/- sign, skip over
-            (goto-char num-beg)
-            (if (s-contains? commify-alt-group-char num)
-                (insert-before-markers (commify--uncommas num commify-alt-group-char))
-              (insert-before-markers (commify--commas
-                       num commify-alt-group-char commify-alt-group-size
-                       commify-alt-digits)))
-            (goto-char num-end)))
-       ;; a decimal number
-       ((looking-at (commify--number-re))
+          (delete-region num-beg num-end)
+          ;; We may have point at a +/- sign, skip over
+          (goto-char num-beg)
+          (if (s-contains? commify-oct-group-char num)
+              (insert-before-markers (commify--uncommas num commify-oct-group-char))
+            (insert-before-markers (commify--commas
+                                    num commify-oct-group-char commify-oct-group-size
+                                    commify-oct-digits)))
+          (goto-char num-end)))
+       ;; an binary number
+       ((and commify-bin-enable (looking-at (commify--bin-number-re)))
+        (let ((num (match-string 3))
+              (num-beg (match-beginning 3))
+              (num-end (match-end 3)))
+          (delete-region num-beg num-end)
+          ;; We may have point at a +/- sign, skip over
+          (goto-char num-beg)
+          (if (s-contains? commify-bin-group-char num)
+              (insert-before-markers (commify--uncommas num commify-bin-group-char))
+            (insert-before-markers (commify--commas
+                                    num commify-bin-group-char commify-bin-group-size
+                                    commify-bin-digits)))
+          (goto-char num-end)))
+       ;; a decimal number, always enabled
+       ((looking-at (commify--decimal-re))
         (let ((num (match-string 2))
               (num-beg (match-beginning 2))
               (num-end (match-end 2)))
