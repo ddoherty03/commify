@@ -21,6 +21,8 @@
 ;; Keywords: convenience, editing, numbers, grouping, commas
 ;; URL: https://github.com/ddoherty03/commify
 
+
+
 ;;; Commentary:
 
 ;; This package provides a simple command to toggle a number under the cursor
@@ -52,14 +54,14 @@
 
 (require 's)
 
-;; Customize options.
+;;;; Customize options.
 
 (defgroup commify nil
   "Toggle insertion of commas in numbers in buffer."
   :group 'convenience)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Decimal numbers customization
+;;;;; Decimal numbers customization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom commify-group-char ","
   "Character to use for separating groups of digits in decimal numbers."
@@ -77,7 +79,7 @@
   :group 'commify)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Hexadecimal numbers customization
+;;;;; Hexadecimal numbers customization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defcustom commify-hex-enable t
@@ -120,7 +122,7 @@ separate the digits into groups of `commify-hex-group-size'."
   :group 'commify)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Octal numbers customization
+;;;;; Octal numbers customization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defcustom commify-oct-enable t
@@ -163,7 +165,7 @@ separate the digits into groups of `commify-oct-group-size'."
   :group 'commify)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Binary numbers customization
+;;;;; Binary numbers customization
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defcustom commify-bin-enable t
@@ -206,7 +208,7 @@ separate the digits into groups of `commify-bin-group-size'."
   :group 'commify)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Regex constructors
+;;;; Regex constructors
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun commify--decimal-re ()
@@ -294,7 +296,7 @@ The matched sub-parts are:
     (concat sign pre whole suffix)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Exception predicates
+;;;; Exception predicates
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun commify--exception-p (str)
@@ -320,7 +322,7 @@ The matched sub-parts are:
     (string-match-p "^0[^xobXOB]" str)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Buffer movement
+;;;; Buffer query and movement
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun commify--current-nonblank ()
   "Return the string from the buffer of all non-blank characters around the cursor"
@@ -342,7 +344,7 @@ The matched sub-parts are:
     0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Adding and removing grouping characters
+;;;; Adding and removing grouping characters
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun commify--commas (n  &optional group-char group-size valid-digits)
@@ -372,7 +374,7 @@ The matched sub-parts are:
   (s-replace-all `((,group-char . "")) n))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Commands
+;;;; Commands
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;###autoload
