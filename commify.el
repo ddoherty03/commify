@@ -319,7 +319,7 @@ The matched sub-parts are:
 (defun commify--zero-filled-p (str)
   "Is STR a zero-padded number?"
   (save-match-data
-    (string-match-p "^0[^xobXOB]" str)))
+    (string-match-p "^0[0-9]" str)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Buffer query and movement
