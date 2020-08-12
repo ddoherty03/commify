@@ -159,7 +159,7 @@ separate the digits into groups of `commify-oct-group-size'."
   :type 'regexp
   :group 'commify)
 
-(defcustom commify-oct-group-size 3
+(defcustom commify-oct-group-size 2
   "Number of digits in each group for octal numbers."
   :type 'integer
   :group 'commify)
@@ -202,7 +202,7 @@ separate the digits into groups of `commify-bin-group-size'."
   :type 'regexp
   :group 'commify)
 
-(defcustom commify-bin-group-size 8
+(defcustom commify-bin-group-size 4
   "Number of digits in each group for octal numbers."
   :type 'integer
   :group 'commify)
