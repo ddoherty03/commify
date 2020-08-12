@@ -15,16 +15,81 @@ Add commify.el to your load-path and
 Simply install the ~commify~ package.
 
 * Configuration
-Commify has three variables that you can set to alter its behaviour, either
+Commify has several variables that you can set to alter its behaviour, either
 through the Emacs customize facility or with ~setq~'s in your init file.
+
+** Variables controlling decimal numbers
+The following variables affect how commify treats decimal numbers:
 
 - commify-group-char :: set this to a one-character string for inserting
      between groups of digits.  By default it is set to ",".
 - commify-group-size :: set this to an integer specifying the number of
-     characters you want in each group.  By default this is set to 3.
+  decimal digits you want in each group.  By default this is set to 3.
 - commify-decimal-char :: set this to a one-character string that is
      recognized as the decimal point.  By default this is set to ".".
 
+** Variables controlling hexadecimal numbers
+The following variables affect how commify treats numbers in other bases:
+
+- commify-hex-enable :: set non-nil to enable grouping on hexadecimal
+  numbers.  By default it is set to t.
+- commify-hex-group-char :: set this to a string for inserting between groups
+  of hexadecimal digits.  By default it is set to "_".
+- commify-hex-group-size :: set this to an integer specifying the number of
+  hexadecimal digits you want in each group.  By default this is set to 4.
+- commify-hex-prefix-re :: set to a string regular expression that matches the
+  beginning of a string by which hexadecimal numbers can be recognized.  By
+  default it is set to "0[xX]"
+- commify-hex-digits :: set to a string that represents a character class
+  (without the square brackets) of valid hexadecimal digits.  This is not
+  itself a regular expression, but is used to build one to recognize
+  hexadecimal numbers.  By default it is set to "0-9A-Fa-f".
+- commify-hex-suffix-re :: set to a string regular expression that matches the
+  end of a string by which hexadecimal numbers can be recognized.  By default
+  it is set to ""
+
+** Variables controlling octal numbers
+Similar variables control commify's treatment of octal numbers:
+
+- commify-oct-enable :: set non-nil to enable grouping on octal
+  numbers.  By default it is set to t.
+- commify-oct-group-char :: set this to a string for inserting between groups
+  of octal digits.  By default it is set to "_".
+- commify-oct-group-size :: set this to an integer specifying the number of
+  octal digits you want in each group.  By default this is set to 2.
+- commify-oct-prefix-re :: set to a string regular expression that matches the
+  beginning of a string by which octal numbers can be recognized.  By
+  default it is set to "0[oO]"
+- commify-oct-digits :: set to a string that represents a character class
+  (without the square brackets) of valid octal digits.  This is not
+  itself a regular expression, but is used to build one to recognize
+  octal numbers.  By default it is set to "0-7".
+- commify-oct-suffix-re :: set to a string regular expression that matches the
+  end of a string by which octal numbers can be recognized.  By default
+  it is set to ""
+
+** Variables controlling binary numbers
+And, finally, another set of variables control commify's treatment of binary
+numbers:
+
+- commify-bin-enable :: set non-nil to enable grouping on binary
+  numbers.  By default it is set to t.
+- commify-bin-group-char :: set this to a string for inserting between groups
+  of binary digits.  By default it is set to "_".
+- commify-bin-group-size :: set this to an integer specifying the number of
+  binary digits you want in each group.  By default this is set to 4.
+- commify-bin-prefix-re :: set to a string regular expression that matches the
+  beginning of a string by which binary numbers can be recognized.  By
+  default it is set to "0[oO]"
+- commify-bin-digits :: set to a string that represents a character class
+  (without the square brackets) of valid binary digits.  This is not
+  itself a regular expression, but is used to build one to recognize
+  binary numbers.  By default it is set to "0-1".
+- commify-bin-suffix-re :: set to a string regular expression that matches the
+  end of a string by which binary numbers can be recognized.  By default
+  it is set to ""
+
+** Keybindings
 Bind the ~commify-toggle~ command to a convenient key.  I have put it on the
 ",," keychord since it is rare in English to type two commas in a row.
 #+BEGIN_SRC emacs-lisp
@@ -36,6 +101,7 @@ You may also want to change the default settings:
   (setq commify-group-char "_")
   (setq commify-decimal-char ",")
   (setq commify-group-size 4)
+  (setq commify-bin-group-size 8)
   (key-chord-define-global ",," 'commify-toggle)
 #+END_SRC
 
@@ -62,15 +128,35 @@ Afterwards, the cursor will be moved to the point immediately after the
 affected number.
 
 ** Ignored Numbers
-If a number appears to be (1) part of a date, (2) part of an identifier, (3)
-part of a hexadecimal number starting with '0x', or (4) a number starting with
-zero, commify will ignore it.  Thus, if the cursor is to the left of
-'2012-09-22' invoking ~commify-toggle~ will leave the text alone, but will
-still advance the cursor.
+If a number appears to be (1) part of a date, (2) part of an identifier, or
+(3) a decimal number starting with zero, commify will ignore it.  Thus, if the
+cursor is to the left of '2012-09-22' invoking ~commify-toggle~ will leave the
+text alone, but will still advance the cursor.
 
 ** Acting on the Region
 If the region is active when the you invoke ~commify-toggle~, all numbers in
 the region have ~commify-toggle~ invoked on them.  This can be especially
 handy when you want to commify numbers in a org-mode table, for example.
+
+With the following table set as the region:
+#+begin_example
+|      Decimal | Binary                                     | Octal           |          Hex |
+|--------------+--------------------------------------------+-----------------+--------------|
+|   4207868622 | 0b11111010110011101111101011001110         | 0o37263575316   |   0xFACEFACE |
+|   2882343476 | 0b10101011110011010001001000110100         | 0o25363211064   |   0xABCD1234 |
+|   3405695742 | 0b11001010111111101100101011111110         | 0o31277545376   |   0xCAFECAFE |
+| 802549529294 | 0b1011101011011011101011011111101011001110 | 0o3533353375316 | 0xBADBADFACE |
+#+end_example
+
+Running commify-toggle on the region yields:
+
+#+begin_example
+| Decimal         | Binary                                              | Octal                 | Hex            |
+|-----------------+-----------------------------------------------------+-----------------------+----------------|
+| 4,207,868,622   | 0b1111_1010_1100_1110_1111_1010_1100_1110           | 0o3_72_63_57_53_16    | 0xFACE_FACE    |
+| 2,882,343,476   | 0b1010_1011_1100_1101_0001_0010_0011_0100           | 0o2_53_63_21_10_64    | 0xABCD_1234    |
+| 3,405,695,742   | 0b1100_1010_1111_1110_1100_1010_1111_1110           | 0o3_12_77_54_53_76    | 0xCAFE_CAFE    |
+| 802,549,529,294 | 0b1011_1010_1101_1011_1010_1101_1111_1010_1100_1110 | 0o3_53_33_53_37_53_16 | 0xBA_DBAD_FACE |
+#+end_example
 
 Not much to it, but it saves me a lot of time.
