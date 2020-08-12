@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # Integration Tests
+echo ""
+echo "========================================"
 echo "Integration tests with ecukes"
 cask exec ecukes
 
