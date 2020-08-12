@@ -302,7 +302,7 @@ The matched sub-parts are:
 (defun commify--exception-p (str)
   "Should the STR be excluded from commify?"
   (or (commify--date-p str)
-      (commify--indentifier-p str)
+      (commify--identifier-p str)
       (commify--zero-filled-p str)))
 
 (defun commify--date-p (str)
@@ -311,7 +311,7 @@ The matched sub-parts are:
     (or (string-match-p "\\(?:19\\|20\\)[[:digit:]]\\{2\\}[-/]" str)
         (string-match-p "[-/]\\(?:19\\|20\\)[[:digit:]]\\{2\\}" str))))
 
-(defun commify--indentifier-p (str)
+(defun commify--identifier-p (str)
   "Is STR part of an identifier?"
   (save-match-data
     (string-match-p "^[A-Za-z]\\s_" str)))
