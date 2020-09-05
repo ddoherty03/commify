@@ -1,30 +1,28 @@
 ;;; commify.el --- Toggle grouping commas in numbers
-
-;; Copyright (C) 2015 Daniel E. Doherty
-
+;;
+;; Copyright (C) 2020 Daniel E. Doherty
+;;
 ;; This program is free software: you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by the Free
 ;; Software Foundation, either version 3 of the License, or (at your option)
 ;; any later version.
-
+;;
 ;; This program is distributed in the hope that it will be useful, but WITHOUT
 ;; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 ;; FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 ;; more details.
-
+;;
 ;; You should have received a copy of the GNU General Public License along
 ;; with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+;;
 ;; Author: Daniel E. Doherty <ded-commify@ddoherty.net>
-;; Version: 1.2.1
+;; Version: 1.3.2
 ;; Package-Requires: ((s "1.9.0"))
 ;; Keywords: convenience, editing, numbers, grouping, commas
 ;; URL: https://github.com/ddoherty03/commify
-
-
-
+;;
 ;;; Commentary:
-
+;;
 ;; This package provides a simple command to toggle a number under the cursor
 ;; between having grouped digits and not.  For example, if the buffer is as
 ;; shown with the cursor at the '*':
@@ -41,6 +39,12 @@
 ;; ever affects the digits before the decimal point.  Afterwards, the cursor
 ;; will be placed immediately after the affected number.
 ;;
+;; Commify now optionally works with hexadecimal, octal, and binary numbers,
+;; with variables for independently setting the group char and group size for
+;; those bases.  They are recognized by prefixes "0x", "0o", and "0b",
+;; respectively, but these can also be set.  See the README at the github page
+;; for details.
+;;
 ;; You can configure these variables:
 ;;   - commify-group-char (default ",") to the char used for grouping
 ;;   - commify-group-size (default 3) to number of digits per group
@@ -49,7 +53,7 @@
 ;; Bind the main function to a convenient key in you init.el file:
 ;;
 ;;    (key-chord-define-global ",," 'commify-toggle)
-
+;;
 ;;; Code:
 
 (require 's)
