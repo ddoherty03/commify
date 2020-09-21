@@ -16,7 +16,7 @@
 ;; with this program.  If not, see <http://www.gnu.org/licenses/>.
 ;;
 ;; Author: Daniel E. Doherty <ded-commify@ddoherty.net>
-;; Version: 1.3.2
+;; Version: 1.3.3
 ;; Package-Requires: ((s "1.9.0"))
 ;; Keywords: convenience, editing, numbers, grouping, commas
 ;; URL: https://github.com/ddoherty03/commify
@@ -211,6 +211,16 @@ separate the digits into groups of `commify-bin-group-size'."
   :type 'integer
   :group 'commify)
 
+(defcustom commify-currency-chars "$€₠¥£"
+  "Currency characters that might be prefixed to a number."
+  :type 'string
+  :group 'commify)
+
+(defcustom commify-open-delims "({<'\"\["
+  "Opening delimiters that might be prefixed to a number."
+  :type 'string
+  :group 'commify)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Regex constructors
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -332,10 +342,10 @@ The matched sub-parts are:
   "Return the string from the buffer of all non-blank characters around the cursor"
 
   (save-excursion
-    (skip-chars-backward "^[:blank:]"
+    (skip-chars-backward (concat "^[:blank:]" commify-currency-chars commify-open-delims)
                          (max (point-min) (line-beginning-position)))
     (let ((beg (point)))
-      (skip-chars-forward "^[:blank:]" (min (point-max) (line-end-position)))
+      (skip-chars-forward "^[:blank:]$" (min (point-max) (line-end-position)))
       (buffer-substring beg (point)))))
 
 (defun commify--move-to-next-nonblank ()
@@ -343,8 +353,10 @@ The matched sub-parts are:
 
   (if (< (point) (point-max))
       (progn
-        (skip-chars-forward "^\n[:blank:]" (point-max))
-        (skip-chars-forward "\n[:blank:]" (point-max)))
+        (skip-chars-forward
+         (concat "^\n[:blank:]" commify-currency-chars commify-open-delims) (point-max))
+        (skip-chars-forward
+         (concat "\n[:blank:]" commify-currency-chars commify-open-delims) (point-max)))
     0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -389,7 +401,7 @@ The matched sub-parts are:
     (save-excursion
       ;; find the beginning of the non-blank run of text the cursor is in or
       ;; after, limited to the beginning of the line or the beginning of buffer.
-      (skip-chars-backward "^[:blank:]"
+      (skip-chars-backward (concat "^[:blank:]" commify-currency-chars commify-open-delims)
                            (max (point-min) (line-beginning-position)))
       (cond
        ;; a hexadecimal number
