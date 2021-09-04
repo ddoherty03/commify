@@ -80,7 +80,7 @@ numbers:
   binary digits you want in each group.  By default this is set to 4.
 - commify-bin-prefix-re :: set to a string regular expression that matches the
   beginning of a string by which binary numbers can be recognized.  By
-  default it is set to "0[oO]"
+  default it is set to "0[bB]".
 - commify-bin-digits :: set to a string that represents a character class
   (without the square brackets) of valid binary digits.  This is not
   itself a regular expression, but is used to build one to recognize
