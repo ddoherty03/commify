@@ -421,59 +421,43 @@ The matched sub-parts are:
       (cond
        ;; a hexadecimal number
        ((and commify-hex-enable (looking-at (commify--hex-number-re)))
-          (let ((num (match-string 3))
-               (num-beg (match-beginning 3))
-               (num-end (match-end 3)))
-           (delete-region num-beg num-end)
-           ;; We may have point at a +/- sign, skip over
-           (goto-char num-beg)
-           (if (s-contains? commify-hex-group-char num)
-               (insert-before-markers (commify--uncommas num commify-hex-group-char))
-             (insert-before-markers (commify--commas
-                                     num commify-hex-group-char commify-hex-group-size
-                                     commify-hex-digits)))
-           (goto-char num-end)))
+        (let ((num (match-string 3)))
+          (if (s-contains? commify-hex-group-char num)
+              (replace-match (commify--uncommas num commify-hex-group-char)
+                             t t nil 3)
+            (replace-match (commify--commas
+                            num commify-hex-group-char commify-hex-group-size
+                            commify-hex-digits)
+                           t t nil 3))))
        ;; an octal number
        ((and commify-oct-enable (looking-at (commify--oct-number-re)))
-        (let ((num (match-string 3))
-              (num-beg (match-beginning 3))
-              (num-end (match-end 3)))
-          (delete-region num-beg num-end)
-          ;; We may have point at a +/- sign, skip over
-          (goto-char num-beg)
+        (let ((num (match-string 3)))
           (if (s-contains? commify-oct-group-char num)
-              (insert-before-markers (commify--uncommas num commify-oct-group-char))
-            (insert-before-markers (commify--commas
-                                    num commify-oct-group-char commify-oct-group-size
-                                    commify-oct-digits)))
-          (goto-char num-end)))
-       ;; an binary number
+              (replace-match (commify--uncommas num commify-oct-group-char)
+                             t t nil 3)
+            (replace-match (commify--commas
+                            num commify-oct-group-char commify-oct-group-size
+                            commify-oct-digits)
+                           t t nil 3))))
+       ;; a binary number
        ((and commify-bin-enable (looking-at (commify--bin-number-re)))
-        (let ((num (match-string 3))
-              (num-beg (match-beginning 3))
-              (num-end (match-end 3)))
-          (delete-region num-beg num-end)
-          ;; We may have point at a +/- sign, skip over
-          (goto-char num-beg)
+        (let ((num (match-string 3)))
           (if (s-contains? commify-bin-group-char num)
-              (insert-before-markers (commify--uncommas num commify-bin-group-char))
-            (insert-before-markers (commify--commas
-                                    num commify-bin-group-char commify-bin-group-size
-                                    commify-bin-digits)))
-          (goto-char num-end)))
+              (replace-match (commify--uncommas num commify-bin-group-char)
+                             t t nil 3)
+            (replace-match (commify--commas
+                            num commify-bin-group-char commify-bin-group-size
+                            commify-bin-digits)
+                           t t nil 3))))
        ;; a decimal number, always enabled
        ((looking-at (commify--decimal-re))
-        (let ((num (match-string 2))
-              (num-beg (match-beginning 2))
-              (num-end (match-end 2)))
-            (delete-region num-beg num-end)
-            ;; We may have point at a +/- sign, skip over
-            (goto-char num-beg)
-            (if (s-contains? commify-group-char num)
-                (insert-before-markers (commify--uncommas num commify-group-char))
-              (insert-before-markers (commify--commas
-                       num commify-group-char commify-group-size)))
-            (goto-char num-end)))))))
+        (let ((num (match-string 2)))
+          (if (s-contains? commify-group-char num)
+              (replace-match (commify--uncommas num commify-group-char)
+                             t t nil 2)
+            (replace-match (commify--commas
+                            num commify-group-char commify-group-size)
+                           t t nil 2))))))))
 
 ;;;###autoload
 (defun commify-toggle-on-region (beg end)
@@ -493,9 +477,10 @@ Do so for all numbers in the region between BEG and END."
 (defun commify-toggle ()
   "Toggle commas at point or on the region from BEG to END."
   (interactive)
-  (if (use-region-p)
-      (commify-toggle-on-region (region-beginning) (region-end))
-    (commify-toggle-at-point)))
+  (save-excursion
+    (if (use-region-p)
+        (commify-toggle-on-region (region-beginning) (region-end))
+      (commify-toggle-at-point))))
 
 
 (provide 'commify)
