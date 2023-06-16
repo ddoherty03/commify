@@ -10,27 +10,27 @@
   (lambda ()
     (call-interactively 'beginning-of-buffer)))
 
-(Given "^I have \"\\(.+\\)\"$"
-  (lambda (something)
-    ;; ...
-    ))
+;; (Given "^I have \"\\(.+\\)\"$"
+;;   (lambda (something)
+;;     ;; ...
+;;     ))
 
-(When "^I have \"\\(.+\\)\"$"
-  (lambda (something)
-    ;; ...
-    ))
+;; (When "^I have \"\\(.+\\)\"$"
+;;   (lambda (something)
+;;     ;; ...
+;;     ))
 
-(Then "^I should have \"\\(.+\\)\"$"
-  (lambda (something)
-    ;; ...
-    ))
+;; (Then "^I should have \"\\(.+\\)\"$"
+;;   (lambda (something)
+;;     ;; ...
+;;     ))
 
-(And "^I have \"\\(.+\\)\"$"
-  (lambda (something)
-    ;; ...
-    ))
+;; (And "^I have \"\\(.+\\)\"$"
+;;   (lambda (something)
+;;     ;; ...
+;;     ))
 
-(But "^I should not have \"\\(.+\\)\"$"
-  (lambda (something)
-    ;; ...
-    ))
+;; (But "^I should not have \"\\(.+\\)\"$"
+;;   (lambda (something)
+;;     ;; ...
+;;     ))
