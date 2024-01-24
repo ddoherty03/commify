@@ -33,6 +33,9 @@ The following variables affect how commify treats numbers in other bases:
 
 - commify-hex-enable :: set non-nil to enable grouping on hexadecimal
   numbers.  By default it is set to t.
+- commify-hash-enable :: set non-nil to enable grouping on hexadecimal
+  hashes, ie. hexadecimal numbers without a prefix. By default it is
+  set to t.
 - commify-hex-group-char :: set this to a string for inserting between groups
   of hexadecimal digits.  By default it is set to "_".
 - commify-hex-group-size :: set this to an integer specifying the number of
