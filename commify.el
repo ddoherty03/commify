@@ -120,6 +120,17 @@ commify will separate hexadecimal digits into groups of
   :type 'boolean
   :local t)
 
+(defcustom commify-hash-enable t
+  "Enable commify for hexadecimal hashes.
+
+You can enable commify to commify hexadecimal hashes. If enabled,
+hexadecimal hashes are identified by defining a character range
+for `commify-hex-digits' to recognize hexadecimal digits. If you
+do so, commify will separate hexadecimal digits into groups of
+`commify-hex-group-size' using the `commify-hex-group-char'."
+  :type 'boolean
+  :local t)
+
 (defcustom commify-hex-group-char "_"
   "Character to use for separating groups of hexadecimal digits."
   :type 'string
@@ -419,15 +430,15 @@ The matched sub-parts are:
       (skip-chars-backward (concat "^[:blank:]" commify-currency-chars commify-open-delims)
                            (max (point-min) (line-beginning-position)))
       (cond
-       ;; a hexadecimal number
-       ((and commify-hex-enable (looking-at (commify--hex-number-re)))
+       ;; a binary number
+       ((and commify-bin-enable (looking-at (commify--bin-number-re)))
         (let ((num (match-string 3)))
-          (if (s-contains? commify-hex-group-char num)
-              (replace-match (commify--uncommas num commify-hex-group-char)
+          (if (s-contains? commify-bin-group-char num)
+              (replace-match (commify--uncommas num commify-bin-group-char)
                              t t nil 3)
             (replace-match (commify--commas
-                            num commify-hex-group-char commify-hex-group-size
-                            commify-hex-digits)
+                            num commify-bin-group-char commify-bin-group-size
+                            commify-bin-digits)
                            t t nil 3))))
        ;; an octal number
        ((and commify-oct-enable (looking-at (commify--oct-number-re)))
@@ -439,16 +450,31 @@ The matched sub-parts are:
                             num commify-oct-group-char commify-oct-group-size
                             commify-oct-digits)
                            t t nil 3))))
-       ;; a binary number
-       ((and commify-bin-enable (looking-at (commify--bin-number-re)))
+       ;; a hexadecimal number
+       ((and commify-hex-enable (looking-at (commify--hex-number-re)))
         (let ((num (match-string 3)))
-          (if (s-contains? commify-bin-group-char num)
-              (replace-match (commify--uncommas num commify-bin-group-char)
+          (if (s-contains? commify-hex-group-char num)
+              (replace-match (commify--uncommas num commify-hex-group-char)
                              t t nil 3)
             (replace-match (commify--commas
-                            num commify-bin-group-char commify-bin-group-size
-                            commify-bin-digits)
+                            num commify-hex-group-char commify-hex-group-size
+                            commify-hex-digits)
                            t t nil 3))))
+       ;; a hexadecimal hash
+       ((and commify-hash-enable
+             (looking-at (format "#?[%s%s]+"
+                                 commify-hex-digits
+                                 commify-hex-group-char))
+             (string-match "[a-fA-F]"
+                           (match-string 0) nil 'inhibit-modify))
+        (let ((num (match-string 0)))
+          (if (s-contains? commify-hex-group-char num)
+              (replace-match (commify--uncommas num commify-hex-group-char)
+                             t t)
+            (replace-match (commify--commas
+                            num commify-hex-group-char commify-hex-group-size
+                            commify-hex-digits)
+                           t t))))
        ;; a decimal number, always enabled
        ((looking-at (commify--decimal-re))
         (let ((num (match-string 2)))
