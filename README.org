@@ -69,8 +69,7 @@ Similar variables control commify's treatment of octal numbers:
   it is set to ""
 
 ** Variables controlling binary numbers
-And, finally, another set of variables control commify's treatment of binary
-numbers:
+Similar variables control commify's treatment of binary numbers:
 
 - commify-bin-enable :: set non-nil to enable grouping on binary
   numbers.  By default it is set to t.
@@ -87,6 +86,28 @@ numbers:
   binary numbers.  By default it is set to "0-1".
 - commify-bin-suffix-re :: set to a string regular expression that matches the
   end of a string by which binary numbers can be recognized.  By default
+  it is set to ""
+
+** Variables controlling base64 hashes
+And, finally, another set of variables control commify's treatment of base64
+numbers:
+
+- commify-base64-enable :: set non-nil to enable grouping on base64
+  numbers.  By default it is set to t.
+- commify-base64-group-char :: set this to a string for inserting between groups
+  of base64 digits.  By default it is set to "_".
+- commify-base64-group-size :: set this to an integer specifying the number of
+  base64 digits you want in each group.  By default this is set to 4.
+- commify-base64-prefix-re :: set to a string regular expression that matches the
+  beginning of a string by which base64 hashes can be recognized.  By
+  default it is set to "".
+- commify-base64-digits :: set to a string that represents a character class
+  (without the square brackets) of valid base64 digits.  This is not
+  itself a regular expression, but is used to build one to recognize
+  base64 hashes.  By default it is set to "A-Za-z0-9\+/=". Note that
+  the '+' character is escaped with a back-slash.
+- commify-base64-suffix-re :: set to a string regular expression that matches the
+  end of a string by which base64 hashes can be recognized.  By default
   it is set to ""
 
 ** Keybindings

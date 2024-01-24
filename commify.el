@@ -237,6 +237,52 @@ commify will separate binary digits into groups of
   :local t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;; Base64 numbers customization
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defgroup commify-base64 nil
+  "Customization of commify for base64 numbers."
+  :group 'commify)
+
+(defcustom commify-base64-enable t
+  "Enable commify for base64 numbers.
+
+You can enable commify to commify base64 numbers.  If
+enabled, base64 numbers are identified by defining appropriate
+regular expressions for `commify-base64-prefix-re' and
+`commify-base64-suffix-re' and a character range for
+`commify-base64-digits' to recognize base64 digits.  If you do so,
+commify will separate base64 digits into groups of
+`commify-base64-group-size' using the `commify-base64-group-char'."
+  :type 'boolean
+  :local t)
+
+(defcustom commify-base64-group-char "_"
+  "Character to use for separating groups of base64 digits."
+  :type 'string
+  :local t)
+
+(defcustom commify-base64-prefix-re ""
+  "Regular expression prefix required before an base64 number."
+  :type 'regexp
+  :local t)
+
+(defcustom commify-base64-digits "A-Za-z0-9\+/="
+  "Character class of valid digits in an base64 number."
+  :type 'regexp
+  :local t)
+
+(defcustom commify-base64-suffix-re ""
+  "Regular expression suffux required after an base64 number."
+  :type 'regexp
+  :local t)
+
+(defcustom commify-base64-group-size 4
+  "Number of digits in each group for base64 numbers."
+  :type 'integer
+  :local t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Regex constructors
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -419,6 +465,21 @@ The matched sub-parts are:
       (skip-chars-backward (concat "^[:blank:]" commify-currency-chars commify-open-delims)
                            (max (point-min) (line-beginning-position)))
       (cond
+       ;; a base64 hash
+       ((and commify-base64-enable
+             (looking-at (format "[%s%s]+"
+                                 commify-base64-digits
+                                 commify-base64-group-char))
+             (string-match "[a-fA-F]"
+                           (match-string 0) nil 'inhibit-modify))
+        (let ((num (match-string 0)))
+          (if (s-contains? commify-base64-group-char num)
+              (replace-match (commify--uncommas num commify-base64-group-char)
+                             t t)
+            (replace-match (commify--commas
+                            num commify-base64-group-char commify-base64-group-size
+                            commify-base64-digits)
+                           t t))))
        ;; a hexadecimal number
        ((and commify-hex-enable (looking-at (commify--hex-number-re)))
         (let ((num (match-string 3)))
