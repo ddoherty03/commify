@@ -17,6 +17,11 @@ Simply install the ~commify~ package.
 * Configuration
 Commify has several variables that you can set to alter its behaviour, either
 through the Emacs customize facility or with ~setq~'s in your init file.
+** Variables controlling all numbers
+The following variables affect how commify treats all numbers:
+
+- commify-group-prefix :: set non-nil to enable grouping prefixes from
+  numbers.  By default it is set to nil.
 
 ** Variables controlling decimal numbers
 The following variables affect how commify treats decimal numbers:
