@@ -10,6 +10,11 @@
   (lambda ()
     (call-interactively 'beginning-of-buffer)))
 
+(When "^I set variable '\\([^\']+\\) to \"\\([^\"]+\\)\"$"
+  (lambda (var val)
+    ;; (print (format "var: %s; val: %s" var val))
+    (set (intern var) (eval (read val)))))
+
 ;; (Given "^I have \"\\(.+\\)\"$"
 ;;   (lambda (something)
 ;;     ;; ...
