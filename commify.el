@@ -266,10 +266,10 @@ The matched sub-parts are:
   2. the whole number part,
   3. the optional fractional part, including the decimal point, and
   4. the optional exponent part."
-  (let ((sign "\\([-+]\\)?")
-        (whole (concat "\\([0-9" (regexp-quote commify-group-char) "]+\\)"))
-        (frac (concat "\\(" (regexp-quote commify-decimal-char) "[0-9]+\\)?"))
-        (exp "\\([eE][-+0-9]+\\)?"))
+  (let ((sign "\\(?1:[-+]\\)?")
+        (whole (concat "\\(?2:[0-9" (regexp-quote commify-group-char) "]+\\)"))
+        (frac (concat "\\(?3:" (regexp-quote commify-decimal-char) "[0-9]+\\)?"))
+        (exp "\\(?4:[eE][-+0-9]+\\)?"))
     (concat sign whole frac exp)))
 
 (defun commify--hex-number-re ()
@@ -286,11 +286,11 @@ The matched sub-parts are:
   3. the whole number part, and
   4. the suffix."
 
-  (let ((sign (concat "\\([-+]\\)?"))
-        (pre (concat "\\(" commify-hex-prefix-re "\\)"))
-        (whole (concat "\\([" (regexp-quote commify-hex-group-char)
+  (let ((sign (concat "\\(?1:[-+]\\)?"))
+        (pre (concat "\\(?2:" commify-hex-prefix-re "\\)"))
+        (whole (concat "\\(?3:[" (regexp-quote commify-hex-group-char)
                        (regexp-quote commify-hex-digits) "]+\\)"))
-        (suffix (concat "\\(" (regexp-quote commify-hex-suffix-re) "\\)")))
+        (suffix (concat "\\(?4:" (regexp-quote commify-hex-suffix-re) "\\)")))
     (concat sign pre whole suffix)))
 
 (defun commify--oct-number-re ()
@@ -307,11 +307,11 @@ The matched sub-parts are:
   3. the whole number part, and
   4. the suffix."
 
-  (let ((sign (concat "\\([-+]\\)?"))
-        (pre (concat "\\(" commify-oct-prefix-re "\\)"))
-        (whole (concat "\\([" (regexp-quote commify-oct-group-char)
+  (let ((sign (concat "\\(?1:[-+]\\)?"))
+        (pre (concat "\\(?2:" commify-oct-prefix-re "\\)"))
+        (whole (concat "\\(?3:[" (regexp-quote commify-oct-group-char)
                        (regexp-quote commify-oct-digits) "]+\\)"))
-        (suffix (concat "\\(" (regexp-quote commify-oct-suffix-re) "\\)")))
+        (suffix (concat "\\(?4:" (regexp-quote commify-oct-suffix-re) "\\)")))
     (concat sign pre whole suffix)))
 
 (defun commify--bin-number-re ()
@@ -328,11 +328,11 @@ The matched sub-parts are:
   3. the whole number part, and
   4. the suffix."
 
-  (let ((sign (concat "\\([-+]\\)?"))
-        (pre (concat "\\(" commify-bin-prefix-re "\\)"))
-        (whole (concat "\\([" (regexp-quote commify-bin-group-char)
+  (let ((sign (concat "\\(?1:[-+]\\)?"))
+        (pre (concat "\\(?2:" commify-bin-prefix-re "\\)"))
+        (whole (concat "\\(?3:[" (regexp-quote commify-bin-group-char)
                        (regexp-quote commify-bin-digits) "]+\\)"))
-        (suffix (concat "\\(" (regexp-quote commify-bin-suffix-re) "\\)")))
+        (suffix (concat "\\(?4:" (regexp-quote commify-bin-suffix-re) "\\)")))
     (concat sign pre whole suffix)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
