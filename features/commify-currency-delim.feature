@@ -2,6 +2,9 @@ Feature: Toggle commify in various numbers
 
   Background:
     Given I switch to buffer "*commify-test*"
+    And I set commify-hash-enable to nil
+    And I set commify-hex-enable to t
+    And I set commify-binary-enable to t
     And I clear the buffer
     And I insert:
       """

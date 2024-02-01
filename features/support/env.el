@@ -17,12 +17,12 @@
   (require 'espuds)
   (require 'ert))
 
-(Setup
- (setq commify-hex-enable t
-       commify-oct-enable t
-       commify-bin-enable t)
- ;; Before anything has run
- )
+;; (Setup
+;;  (setq commify-hex-enable t
+;;        commify-oct-enable t
+;;        commify-bin-enable t)
+;;  ;; Before anything has run
+;;  )
 
 (Before
  ;; Before each scenario is run

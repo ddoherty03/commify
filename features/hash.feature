@@ -2,6 +2,7 @@ Feature: Toggle commify in hashes
 
   Background:
     Given I switch to buffer "*commify-test*"
+    And I set commify-hash-enable to t
     And I clear the buffer
     And I insert:
       """
