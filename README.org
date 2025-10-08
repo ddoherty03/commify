@@ -1,8 +1,9 @@
 * Commify
- Insert or remove grouping commas (or other grouping character) in the number
- under or adjacent to the cursor, or for all numbers within the region, with a
- single command.  This is an otherwise tedious chore and one that is not
- easily done via a macro or other Emacs user-level facilities.
+ An Emacs package to quickly insert or remove grouping commas (or other
+ grouping character) in the number under or adjacent to the cursor, or for all
+ numbers within the region, with a single command.  This is an otherwise
+ tedious chore and one that is not easily done via a macro or other Emacs
+ user-level facilities.
 
 * Installation
 ** Without Package
@@ -12,7 +13,8 @@ Add commify.el to your load-path and
 #+END_SRC
 
 ** With Package Manager
-Simply install the ~commify~ package.
+Simply =package-install commify= with the Emacs package manager.  This code is
+up on MELPA.
 
 * Configuration
 Commify has several variables that you can set to alter its behaviour, either
