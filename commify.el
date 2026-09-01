@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; commify.el --- Toggle grouping commas in numbers
 ;;
 ;; Copyright (C) 2020 Daniel E. Doherty

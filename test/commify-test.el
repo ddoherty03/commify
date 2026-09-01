@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; Commentary:
 
 ;; This file provides tests for commify.  To run the tests, first run

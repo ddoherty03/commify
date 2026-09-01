@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; Commentary:
 
 ;; Make sure we are testing the source-code version of the code, not for
